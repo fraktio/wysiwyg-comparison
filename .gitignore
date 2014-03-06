@@ -1,0 +1,5 @@
+web/php_errors.log
+composer.lock
+vendor
+cache
+.idea

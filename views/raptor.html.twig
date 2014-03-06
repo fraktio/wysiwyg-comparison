@@ -1,0 +1,55 @@
+{% extends "wysiwyg.html.twig" %}
+
+{% block editor_head %}
+
+    <script type="text/javascript" src="/js/raptor/raptor.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" />
+    <link href="/js/raptor/raptor-front-end.min.css" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block editor_init %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('.editable').raptor({
+
+                preset: 'full',
+
+                bind: {
+                    saved: function() {
+                        var html = this.getHtml();
+
+                        console.log(html);
+
+                        // Wysiwyg.save(html);
+                    }
+                },
+
+                plugins: {
+                    // The save UI plugin/button
+                    save: {
+                        // Specifies the UI to call the saveJson plugin to do the actual saving
+                        plugin: 'saveJson'
+                    },
+                    saveJson: {
+                        // The URI to send the content to
+                        url: '/save.php',
+                        postName: 'raptor-content',
+                        // The ID of the content (or a function the returns the ID)
+                        id: function() {
+                            return this.raptor.getElement().data('id');
+                        }
+                    }
+                }
+
+            });
+
+        });
+
+    </script>
+
+{% endblock %}
+

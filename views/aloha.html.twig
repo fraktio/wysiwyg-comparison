@@ -1,0 +1,39 @@
+{% extends "wysiwyg.html.twig" %}
+
+{% block editor_head %}
+
+    <script type="text/javascript" src="http://cdn.aloha-editor.org/latest/lib/require.js"></script>
+
+    <!-- load the Aloha Editor core and some plugins -->
+    <script src="http://cdn.aloha-editor.org/latest/lib/aloha.js"
+            data-aloha-plugins="common/ui,
+                                                        common/format,
+                                                        common/list,
+                                                        common/link,
+                                                        common/highlighteditables,
+                                                        extras/imagebrowser">
+    </script>
+
+    <!-- load the Aloha Editor CSS styles -->
+    <link href="http://cdn.aloha-editor.org/latest/css/aloha.css" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block editor_init %}
+
+    <script type="text/javascript">
+        Aloha.ready( function() {
+            var $ = Aloha.jQuery;
+            $('.editable').aloha();
+
+            Aloha.bind('aloha-editable-deactivated', function(){
+                var content = Aloha.activeEditable.getContents();
+                Wysiwyg.save(content);
+            });
+
+        });
+
+    </script>
+
+{% endblock %}
+
